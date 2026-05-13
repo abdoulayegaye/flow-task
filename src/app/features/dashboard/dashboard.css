@@ -1,0 +1,11 @@
+.card-total {
+    border-top: 4px solid #007bff;
+}
+
+.card-completed {
+    border-top: 4px solid #28a745;
+}
+
+.card-in-progress {
+    border-top: 4px solid #ffc107;
+}

@@ -1,0 +1,46 @@
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold mb-1">Bonjour, {{ username }}!</h1>
+        <p class="text-muted mb-0">Voici un résumé de vos tâches</p>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col">
+            <div class="card text-center h-100 card-total">
+                <div class="card-body py-4">
+                    <i class="fa-solid fa-layer-group fa-lg text-primary mb-2"></i>
+                    <div class="display-6 fw-bold text-primary">{{ totalTasksCount}}</div>
+                    <div class="text-muted small text-uppercase fw-semibold mt-1">Total</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center h-100 card-completed">
+                <div class="card-body py-4">
+                    <i class="fa-solid fa-circle-check fa-lg text-success mb-2"></i>
+                    <div class="display-6 fw-bold text-success">{{ completedTasksCount }}</div>
+                    <div class="text-muted small text-uppercase fw-semibold mt-1">Terminées</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center h-100 card-in-progress">
+                <div class="card-body py-4">
+                    <i class="fa-solid fa-spinner fa-lg text-warning mb-2"></i>
+                    <div class="display-6 fw-bold text-warning">{{ inProgressTasksCount }}</div>
+                    <div class="text-muted small text-uppercase fw-semibold mt-1">En cours</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-center">
+        <a class="btn btn-primary" routerLink="/tasks" >
+            <i class="fa-solid fa-list-check me-2"></i> Voir mes tâches
+        </a>
+        <a routerLink="/tasks/new" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-plus me-1"></i> Nouvelle tâche
+        </a>
+    </div>
+</div>

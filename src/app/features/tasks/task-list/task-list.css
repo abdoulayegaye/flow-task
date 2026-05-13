@@ -1,0 +1,8 @@
+.flag        { display: inline-block; width: 10px; height: 26px; border-radius: 3px; }
+.flag-high   { background: #dc3545; }
+.flag-medium { background: #ffc107; }
+.flag-low    { background: #6c757d; }
+
+.col-flag    { width: 28px; }
+.col-actions { width: 1%; }
+.desc-truncate { max-width: 320px; }

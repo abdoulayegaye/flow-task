@@ -1,0 +1,112 @@
+<div class="container">
+    <!-- Entete -->
+    <div class="d-flex justify-content-between align-itelms-start mb-3">
+        <div>
+            <h1 class="fw-bold mb-1"><i class="fa-solid fa-list-check me-2 text-primary"></i>Mes tâches</h1>
+            <p class="text-muted small mb-0">
+                <i class="fa-solid fa-check-circle me-1 text-success"></i>
+                {{ completedTasksCount }} / {{ totalTasksCount }} terminées
+            </p>
+        </div>
+        <div>
+            <a routerLink="/tasks/new" class="btn btn-primary">
+                <i class="fa-solid fa-plus me-1"></i> Nouvelle tâche
+            </a>
+        </div>
+    </div>
+    <!-- Barre de recherche + Filtres -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher une tâche...">
+            </div>
+
+            <div class="row g-2">
+                <div class="col-12 col-md-6">
+                    <label class="text-muted small text-uppercase fw-semibold mb-1 d-block">
+                        <i class="fa-solid fa-circle-half-stroke me-1"></i>Statut
+                    </label>
+                    <div class="btn-group btn-group-sm w-100">
+                        <button class="btn btn-outline-secondary active">Tous</button>
+                        <button class="btn btn-outline-secondary">A faire</button>
+                        <button class="btn btn-outline-primary">En cours</button>
+                        <button class="btn btn-outline-success">Terminé</button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="text-muted small text-uppercase fw-semibold mb-1 d-block">
+                        <i class="fa-solid fa-flag me-1"></i>Priorité
+                    </label>
+                    <div class="btn-group btn-group-sm w-100">
+                        <button class="btn btn-outline-secondary active">Toutes</button>
+                        <button class="btn btn-outline-secondary">Faible</button>
+                        <button class="btn btn-outline-warning">Moyenne</button>
+                        <button class="btn btn-outline-danger">Elevée</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Données -->
+    @if(tasks.length === 0) {
+    <div class="card">
+        <div class="card-body text-center py-5 text-muted">
+            <i class="fa-solid fa-inbox fa-2x mb-3 d-block"></i>
+            @if(isFiltered) {
+            <p class="mb-0">Aucune tâche ne correspond à vos critères de recherche.</p>
+            } @else {
+            <p class="mb-0">Aucune tâche pour l'instant. Commencez par en créer une !</p>
+            }
+        </div>
+    </div>
+    } @else {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="col-flag"></th>
+                        <th>Tâches</th>
+                        <th>Statut</th>
+                        <th class="col-actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(task of tasks; track task.id) {
+                    <tr [class.opacity-50]="task.status === 'done'">
+                        <td>
+                            <span class="flag" [class.flag-high]="task.priority === 'high'"
+                                [class.flag-medium]="task.priority === 'medium'"
+                                [class.flag-low]="task.priority === 'low'" [title]="task.priority"></span>
+                        </td>
+                        <td>
+                            <div class="fw-semibold">
+                                {{ task.title }}
+                            </div>
+                            @if(task.description) {
+                            <div class="text-muted small text-truncate desc-truncate">
+                                {{ task.description }}
+                            </div>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge" [class.bg-secondary]="task.status === 'todo'"
+                                [class.bg-primary]="task.status === 'in-progress'"
+                                [class.bg-success]="task.status === 'done'">{{ task.status }}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1 align-items-center">
+                                <a class="btn btn-sm btn-outline-secondary" title="Modifier"><i class="fa-solid fa-pen"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" title="Supprimer"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+    <!-- Pagination -->
+</div>
