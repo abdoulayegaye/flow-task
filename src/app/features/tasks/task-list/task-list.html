@@ -1,25 +1,32 @@
 <div class="container">
-    <!-- Entete -->
-    <div class="d-flex justify-content-between align-itelms-start mb-3">
+
+    <!-- En-tête -->
+    <div class="d-flex justify-content-between align-items-start mb-3">
         <div>
-            <h1 class="fw-bold mb-1"><i class="fa-solid fa-list-check me-2 text-primary"></i>Mes tâches</h1>
+            <h1 class="fw-bold mb-1"><i class="fa-solid fa-list-check me-2 text-primary"></i>Mes Tâches</h1>
             <p class="text-muted small mb-0">
-                <i class="fa-solid fa-check-circle me-1 text-success"></i>
-                {{ completedTasksCount }} / {{ totalTasksCount }} terminées
+                <i class="fa-solid fa-check-circle me-1 text-success"></i>{{ completedCount }} / {{ totalCount }}
+                terminées
             </p>
         </div>
-        <div>
-            <a routerLink="/tasks/new" class="btn btn-primary">
-                <i class="fa-solid fa-plus me-1"></i> Nouvelle tâche
-            </a>
-        </div>
+        <a class="btn btn-primary" routerLink="/tasks/new">
+            <i class="fa-solid fa-plus me-1"></i>Nouvelle tâche
+        </a>
     </div>
-    <!-- Barre de recherche + Filtres -->
+
+    <!-- Barre de recherche + filtres -->
     <div class="card mb-3">
         <div class="card-body">
+
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" class="form-control" placeholder="Rechercher une tâche...">
+                <input type="text" class="form-control" [value]="searchQuery" (input)="onSearch($event)"
+                    placeholder="Rechercher une tâche…" />
+                @if (searchQuery) {
+                <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()" title="Effacer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                }
             </div>
 
             <div class="row g-2">
@@ -28,10 +35,14 @@
                         <i class="fa-solid fa-circle-half-stroke me-1"></i>Statut
                     </label>
                     <div class="btn-group btn-group-sm w-100">
-                        <button class="btn btn-outline-secondary active">Tous</button>
-                        <button class="btn btn-outline-secondary">A faire</button>
-                        <button class="btn btn-outline-primary">En cours</button>
-                        <button class="btn btn-outline-success">Terminé</button>
+                        <button class="btn btn-outline-secondary" [class.active]="selectedStatus === null"
+                            (click)="setStatusFilter(null)">Tous</button>
+                        <button class="btn btn-outline-secondary" [class.active]="selectedStatus === 'todo'"
+                            (click)="setStatusFilter('todo')">À faire</button>
+                        <button class="btn btn-outline-primary" [class.active]="selectedStatus === 'in-progress'"
+                            (click)="setStatusFilter('in-progress')">En cours</button>
+                        <button class="btn btn-outline-success" [class.active]="selectedStatus === 'done'"
+                            (click)="setStatusFilter('done')">Terminé</button>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
@@ -39,22 +50,28 @@
                         <i class="fa-solid fa-flag me-1"></i>Priorité
                     </label>
                     <div class="btn-group btn-group-sm w-100">
-                        <button class="btn btn-outline-secondary active">Toutes</button>
-                        <button class="btn btn-outline-secondary">Faible</button>
-                        <button class="btn btn-outline-warning">Moyenne</button>
-                        <button class="btn btn-outline-danger">Elevée</button>
+                        <button class="btn btn-outline-secondary" [class.active]="selectedPriority === null"
+                            (click)="setPriorityFilter(null)">Toutes</button>
+                        <button class="btn btn-outline-secondary" [class.active]="selectedPriority === 'low'"
+                            (click)="setPriorityFilter('low')">Faible</button>
+                        <button class="btn btn-outline-warning" [class.active]="selectedPriority === 'medium'"
+                            (click)="setPriorityFilter('medium')">Moyen</button>
+                        <button class="btn btn-outline-danger" [class.active]="selectedPriority === 'high'"
+                            (click)="setPriorityFilter('high')">Élevé</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-    <!-- Données -->
-    @if(tasks.length === 0) {
+
+    <!-- Contenu -->
+    @if (filteredTasks.length === 0) {
     <div class="card">
         <div class="card-body text-center py-5 text-muted">
             <i class="fa-solid fa-inbox fa-2x mb-3 d-block"></i>
-            @if(isFiltered) {
-            <p class="mb-0">Aucune tâche ne correspond à vos critères de recherche.</p>
+            @if (isFiltered) {
+            <p class="mb-0">Aucune tâche ne correspond à votre recherche.</p>
             } @else {
             <p class="mb-0">Aucune tâche pour l'instant. Commencez par en créer une !</p>
             }
@@ -67,46 +84,87 @@
                 <thead class="table-light">
                     <tr>
                         <th class="col-flag"></th>
-                        <th>Tâches</th>
+                        <th>Tâche</th>
                         <th>Statut</th>
                         <th class="col-actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for(task of tasks; track task.id) {
+                    @for (task of pagedTasks; track task.id) {
                     <tr [class.opacity-50]="task.status === 'done'">
+
                         <td>
                             <span class="flag" [class.flag-high]="task.priority === 'high'"
                                 [class.flag-medium]="task.priority === 'medium'"
-                                [class.flag-low]="task.priority === 'low'" [title]="task.priority"></span>
+                                [class.flag-low]="task.priority === 'low'"
+                                [title]="task.priority | priorityLabel"></span>
                         </td>
+
                         <td>
-                            <div class="fw-semibold">
-                                {{ task.title }}
-                            </div>
-                            @if(task.description) {
-                            <div class="text-muted small text-truncate desc-truncate">
-                                {{ task.description }}
-                            </div>
+                            <div class="fw-semibold">{{ task.title }}</div>
+                            @if (task.description) {
+                            <div class="text-muted small text-truncate desc-truncate">{{ task.description }}</div>
                             }
                         </td>
+
                         <td>
                             <span class="badge" [class.bg-secondary]="task.status === 'todo'"
                                 [class.bg-primary]="task.status === 'in-progress'"
-                                [class.bg-success]="task.status === 'done'">{{ task.status }}</span>
+                                [class.bg-success]="task.status === 'done'">{{ task.status | statusLabel }}</span>
                         </td>
+
                         <td>
                             <div class="d-flex gap-1 align-items-center">
-                                <a class="btn btn-sm btn-outline-secondary" title="Modifier"><i class="fa-solid fa-pen"></i></a>
-                                <button class="btn btn-sm btn-outline-danger" title="Supprimer"><i class="fa-solid fa-trash"></i></button>
+                                <a class="btn btn-sm btn-outline-secondary" 
+                                    title="Modifier"><i class="fa-solid fa-pen"></i></a>
+
+                                @if (confirmDeleteId === task.id) {
+                                <span class="d-flex align-items-center gap-1 ms-1">
+                                    <span class="text-danger small me-1">Supprimer ?</span>
+                                    <button class="btn btn-sm btn-danger" title="Confirmer"
+                                        (click)="confirmDelete(task.id)">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" title="Annuler"
+                                        (click)="cancelDelete()">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </span>
+                                } @else {
+                                <button class="btn btn-sm btn-outline-danger" title="Supprimer"
+                                    (click)="requestDelete(task.id)"><i class="fa-solid fa-trash"></i></button>
+                                }
                             </div>
                         </td>
+
                     </tr>
                     }
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination -->
+        <div class="card-footer d-flex justify-content-between align-items-center">
+            <span class="text-muted small">
+                @if (isFiltered) {
+                <i class="fa-solid fa-filter me-1"></i>{{ filteredTasks.length }} résultat(s) sur {{ totalCount }}
+                } @else {
+                <i class="fa-solid fa-list me-1"></i>{{ totalCount }} tâche{{ totalCount > 1 ? 's' : '' }} au total
+                }
+            </span>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary" [disabled]="currentPage === 1"
+                    (click)="goToPage(currentPage - 1)" title="Précédent">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span class="small fw-medium">{{ currentPage }} / {{ totalPages }}</span>
+                <button class="btn btn-sm btn-outline-secondary" [disabled]="currentPage === totalPages"
+                    (click)="goToPage(currentPage + 1)" title="Suivant">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
     }
-    <!-- Pagination -->
+
 </div>
