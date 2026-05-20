@@ -115,7 +115,9 @@
 
                         <td>
                             <div class="d-flex gap-1 align-items-center">
-                                <a class="btn btn-sm btn-outline-secondary" 
+                                <a 
+                                    [routerLink]="['/tasks', task.id, 'edit']" 
+                                    class="btn btn-sm btn-outline-secondary" 
                                     title="Modifier"><i class="fa-solid fa-pen"></i></a>
 
                                 @if (confirmDeleteId === task.id) {

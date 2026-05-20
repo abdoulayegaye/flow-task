@@ -4,10 +4,11 @@ import { Task, TaskPriority, TaskStatus } from '../../../core/models/task.model'
 import { TaskService } from '../../../core/services/task.service';
 import { StatusLabelPipe } from '../../../shared/pipes/status-label-pipe';
 import { PriorityLabelPipe } from "../../../shared/pipes/priority-label-pipe";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
-  imports: [StatusLabelPipe, PriorityLabelPipe],
+  imports: [RouterLink, StatusLabelPipe, PriorityLabelPipe],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
@@ -34,8 +35,12 @@ export class TaskListComponent {
         t => t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q),
       );
     }
-    if (this.selectedStatus) result = result.filter(t => t.status === this.selectedStatus);
-    if (this.selectedPriority) result = result.filter(t => t.priority === this.selectedPriority);
+    if (this.selectedStatus) 
+      result = result.filter(t => t.status === this.selectedStatus);
+
+    if (this.selectedPriority) 
+      result = result.filter(t => t.priority === this.selectedPriority);
+
     return result;
   }
 

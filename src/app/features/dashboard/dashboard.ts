@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { combineLatest, map } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { TaskService } from '../../core/services/task.service';
 
 @Component({
@@ -11,6 +10,7 @@ import { TaskService } from '../../core/services/task.service';
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent {
+  
   private readonly taskService = inject(TaskService);
 
   username = 'Utilisateur';

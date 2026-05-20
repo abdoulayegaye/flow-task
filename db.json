@@ -1,70 +1,28 @@
 {
-    "tasks": [
-        {
-            "id": 1,
-            "title": "Task 1 Modou Sarr",
-            "description": "Description for Task 1",
-            "status": "todo",
-            "priority": "medium",
-            "createdAt": "2024-07-15"
-        },
-        {
-            "id": 2,
-            "title": "Task 2",
-            "description": "Description for Task 2",
-            "status": "in-progress",
-            "priority": "high",
-            "createdAt": "2024-07-15"
-        },
-        {
-            "id": 3,
-            "title": "Task 3",
-            "description": "Description for Task 3",
-            "status": "done",
-            "priority": "low",
-            "createdAt": "2024-07-15"
-        },
-        {
-            "title": "totot",
-            "description": "toto",
-            "priority": "medium",
-            "status": "todo",
-            "createdAt": "2026-05-18T19:39:10.267Z",
-            "id": 4
-        },
-        {
-            "title": "",
-            "description": "",
-            "priority": "medium",
-            "status": "todo",
-            "createdAt": "2026-05-18T19:39:13.269Z",
-            "id": 5
-        },
-        {
-            "title": "",
-            "description": "",
-            "priority": "medium",
-            "status": "todo",
-            "createdAt": "2026-05-18T19:39:51.560Z",
-            "id": 6
-        }
-    ],
-
-    "users": [
-        {
-            "id": 1,
-            "fullname": "Modou Sarr",
-            "email": "modou.sarr@example.com"
-        },
-        {
-            "id": 2,
-            "fullname": "Modou Sarr",
-            "email": "modou.sarr@example.com"
-        }
-        ,{
-            "id": 3,
-            "fullname": "Modou Sarr",
-            "email": "modou.sarr@example.com"
-        }
-    ]
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Task 1 Modou Sarr",
+      "description": "Description for Task 1",
+      "status": "todo",
+      "priority": "medium",
+      "createdAt": "2024-07-15"
+    },
+    {
+      "id": "2",
+      "title": "Task 2",
+      "description": "Description for Task 2",
+      "status": "in-progress",
+      "priority": "high",
+      "createdAt": "2024-07-15"
+    },
+    {
+      "title": "doudou",
+      "description": "tache de doudou",
+      "priority": "high",
+      "status": "in-progress",
+      "id": "325649a4-262c-481e-98f7-d7653c65a31b",
+      "createdAt": "2026-05-20T20:26:47.752Z"
+    }
+  ]
 }
