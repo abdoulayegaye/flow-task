@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "task-flow-postgres",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "keycloak",
+            "Username": "keycloak",
+            "SSLMode": "prefer",
+            "PassFile": "/pgpass"
+        }
+    }
+}

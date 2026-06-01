@@ -1,0 +1,58 @@
+{
+    "realm": "task-flow",
+    "enabled": true,
+    "sslRequired": "none",
+    "registrationAllowed": false,
+    "loginWithEmailAllowed": true,
+    "internationalizationEnabled": false,
+    "clients": [
+        {
+            "clientId": "task-flow-app",
+            "enabled": true,
+            "publicClient": true,
+            "standardFlowEnabled": true,
+            "directAccessGrantsEnabled": true,
+            "redirectUris": [
+                "http://localhost:4200/*"
+            ],
+            "webOrigins": [
+                "http://localhost:4200"
+            ],
+            "attributes": {
+                "post.logout.redirect.uris": "http://localhost:4200"
+            }
+        }
+    ],
+    "users": [
+        {
+            "username": "user1",
+            "email": "user1@gmail.com",
+            "firstName": "Modou",
+            "lastName": "SARR",
+            "enabled": true,
+            "emailVerified": false,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "passer",
+                    "temporary": false
+                }
+            ]
+        },
+        {
+            "username": "user2",
+            "email": "user2@gmail.com",
+            "firstName": "Fatoumata",
+            "lastName": "DIAGNE",
+            "enabled": true,
+            "emailVerified": false,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "passer",
+                    "temporary": false
+                }
+            ]
+        }
+    ]
+}
