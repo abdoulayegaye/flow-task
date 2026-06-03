@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './features/dashboard/dashboard';
 import { TaskListComponent } from './features/tasks/task-list/task-list';
 import { TaskFormComponent } from './features/tasks/task-form/task-form';
+import { LoginComponent } from './features/auth/login/login';
 
 export const routes: Routes = [
     {
@@ -11,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: DashboardComponent //LoginComponent --- IGNORE ---
+        component: LoginComponent
     },
     {
         path: 'dashboard',

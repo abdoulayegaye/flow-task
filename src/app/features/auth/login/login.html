@@ -1,0 +1,54 @@
+<div class="d-flex min-vh-100 align-items-center justify-content-center bg-light">
+    <div class="card shadow-sm" style="width: 420px; max-width: 95vw;">
+        <div class="card-body">
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-primary">TaskFlow</h1>
+                <p class="text-muted">Bienvenue! Connectez-vous à votre compte.</p>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="mb-3">
+                    <label for="username" class="form-label fw-medium">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                        <input 
+                            id="username" 
+                            type="text" 
+                            class="form-control" 
+                            formControlName="username"
+                            placeholder="Votre username" 
+                            autocomplete="username" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-medium">Mot de passe</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                        <input 
+                            id="password" 
+                            type="password" 
+                            class="form-control" 
+                            formControlName="password"
+                            placeholder="••••••••" 
+                            autocomplete="current-password" />
+                    </div>
+                </div>
+
+                @if (errorMessage) {
+                <div class="alert alert-danger py-2 small">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>{{ errorMessage }}
+                </div>
+                }
+
+                <button class="btn btn-primary w-100 mt-1" type="submit" [disabled]="form.invalid || loading">
+                    @if (loading) {
+                    <i class="fa-solid fa-spinner fa-spin me-2"></i>Connexion...
+                    } @else {
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>Se connecter
+                    }
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

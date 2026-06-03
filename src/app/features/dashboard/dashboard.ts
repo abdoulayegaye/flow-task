@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { TaskService } from '../../core/services/task.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,9 @@ import { TaskService } from '../../core/services/task.service';
 export class DashboardComponent {
   
   private readonly taskService = inject(TaskService);
+  private readonly authService = inject(AuthService);
 
-  username = 'Utilisateur';
+  username = this.authService.username;
   totalTasksCount = 0;
   completedTasksCount = 0;
   inProgressTasksCount = 0;
