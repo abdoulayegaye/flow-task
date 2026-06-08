@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   private get tokenPayload(): TokenPayload | null {
-    const token = this._token$.getValue();
+    const token = this.getToken();
     if (!token) return null;
     try {
       const payloadBase64 = token.split('.')[1];
@@ -34,7 +34,11 @@ export class AuthService {
     } catch {
       return null;
     }
-  }  
+  } 
+  
+  getToken(): string | null {
+    return this._token$.getValue();
+  }
   
   get username(): string {
     const p = this.tokenPayload;
@@ -57,8 +61,8 @@ export class AuthService {
         .pipe(
           tap(({ access_token }) => {
             console.log(access_token);
-            this.storage.set(this.TOKEN_KEY, access_token);
             this._token$.next(access_token);
+            this.storage.set(this.TOKEN_KEY, access_token);
           }),
           map(() => void 0)
         );

@@ -3,6 +3,7 @@ import { DashboardComponent } from './features/dashboard/dashboard';
 import { TaskListComponent } from './features/tasks/task-list/task-list';
 import { TaskFormComponent } from './features/tasks/task-form/task-form';
 import { LoginComponent } from './features/auth/login/login';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -16,10 +17,12 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
+        canActivate: [authGuard],
         component: DashboardComponent
     },
     {
         path: 'tasks',
+        canActivate: [authGuard],
         children: [
             { path: '', component: TaskListComponent }, // /tasks
             { path: 'new', component: TaskFormComponent }, // /tasks/new
